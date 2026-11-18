@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['w_0',['w',['../structRGFW__monitorMode.html#a3d8ac1d0c0f76d164809410fd8823a87',1,'RGFW_monitorMode']]],
-  ['win_1',['win',['../structRGFW__commonEvent.html#afe9e8a63db95557a8f9a9b54beb00de7',1,'RGFW_commonEvent::win()'],['../structRGFW__mouseButtonEvent.html#a5979815035890c901e50ca75e19af0e6',1,'RGFW_mouseButtonEvent::win()'],['../structRGFW__mouseScrollEvent.html#a86473efaa6a820e3cbe339d4d141cbde',1,'RGFW_mouseScrollEvent::win()'],['../structRGFW__mousePosEvent.html#a7774229545143d46a4c0e2b937594dac',1,'RGFW_mousePosEvent::win()'],['../structRGFW__keyEvent.html#a6f6c234446b5abdb4039ae5d1f71bfc0',1,'RGFW_keyEvent::win()'],['../structRGFW__dataDropEvent.html#a2afdc0acf5b6c4b275b20c937e397f6d',1,'RGFW_dataDropEvent::win()'],['../structRGFW__dataDragEvent.html#a21a8f1e2da60a1ccc1ccd69bcfc7de1a',1,'RGFW_dataDragEvent::win()'],['../structRGFW__scaleUpdatedEvent.html#ad9a02a7cfb6ed527e54caf9cb10c2bf9',1,'RGFW_scaleUpdatedEvent::win()']]]
+  ['scale_0',['scale',['../unionRGFW__event.html#a860aa9af0706cd7217ad6622e47747f4',1,'RGFW_event']]],
+  ['scalex_1',['scaleX',['../structRGFW__monitor.html#ac991866248d4babbd78fe1a7fd8ee145',1,'RGFW_monitor']]],
+  ['scaley_2',['scaleY',['../structRGFW__monitor.html#a906b121ba6fb271b108da0d063bb303e',1,'RGFW_monitor']]],
+  ['src_3',['src',['../structRGFW__monitorMode.html#ac9492deabed35fd038e8b44f2e09764e',1,'RGFW_monitorMode']]],
+  ['state_4',['state',['../structRGFW__windowFocusEvent.html#abbed70bcff33345a64328852729cad47',1,'RGFW_windowFocusEvent::state()'],['../structRGFW__mouseButtonEvent.html#a911763210b899a5d36551474cb0dfde9',1,'RGFW_mouseButtonEvent::state()'],['../structRGFW__keyEvent.html#a35b26572d794f51bbe769530f17ce3ff',1,'RGFW_keyEvent::state()'],['../structRGFW__monitorEvent.html#af0af711f33474012ff1818b90bce015a',1,'RGFW_monitorEvent::state()']]]
 ];

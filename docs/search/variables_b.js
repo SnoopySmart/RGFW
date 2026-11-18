@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['scale_0',['scale',['../unionRGFW__event.html#a860aa9af0706cd7217ad6622e47747f4',1,'RGFW_event']]],
-  ['scalex_1',['scaleX',['../structRGFW__monitor.html#ac991866248d4babbd78fe1a7fd8ee145',1,'RGFW_monitor']]],
-  ['scaley_2',['scaleY',['../structRGFW__monitor.html#a906b121ba6fb271b108da0d063bb303e',1,'RGFW_monitor']]],
-  ['scroll_3',['scroll',['../unionRGFW__event.html#a77930b5774da8d41fa6aafe43de192e8',1,'RGFW_event']]],
-  ['sym_4',['sym',['../structRGFW__keyEvent.html#a1eeaf20ac5397964a9f4b0c498b24400',1,'RGFW_keyEvent']]]
+  ['name_0',['name',['../structRGFW__monitor.html#aaea809cea2ca3420c64b1ae3d69bb3ae',1,'RGFW_monitor']]],
+  ['next_1',['next',['../structRGFW__dataDropNode.html#ae2f320355d81a06c3f45d6d0e6a9566d',1,'RGFW_dataDropNode']]],
+  ['node_2',['node',['../structRGFW__monitor.html#abc6602c277d34ddfacb1a5c3178ffc07',1,'RGFW_monitor']]]
 ];

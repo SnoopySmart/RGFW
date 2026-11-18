@@ -1,4 +1,4 @@
-.TH "Window_management" 3 "Fri Dec 12 2025" "RGFW" \" -*- nroff -*-
+.TH "Window_management" 3 "Wed Nov 18 2026" "RGFW" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -15,11 +15,11 @@ Window_management \- Window_management
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_checkEvent\fP (\fBRGFW_window\fP *win, \fBRGFW_event\fP *event)"
 .br
-.RI "polls and pops the next event from the window's event queue "
+.RI "polls and pops the next event with the matching target window in event queue, pushes back events that don't match "
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_checkQueuedEvent\fP (\fBRGFW_window\fP *win, \fBRGFW_event\fP *event)"
 .br
-.RI "pops the first queued event for the window "
+.RI "pops the first queued event with the matching target window, pushes back events that don't match "
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isKeyPressed\fP (\fBRGFW_window\fP *win, RGFW_key key)"
 .br
@@ -69,9 +69,9 @@ Window_management \- Window_management
 .br
 .RI "checks if a data drop occurred in the window (first frame only) "
 .ti -1c
-.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_getDataDrop\fP (\fBRGFW_window\fP *win, const char ***files, size_t *count)"
+.RI "\fBRGFWDEF\fP \fBRGFW_dataDropNode\fP * \fBRGFW_window_getDataDrop\fP (\fBRGFW_window\fP *win)"
 .br
-.RI "retrieves files from a data drop (drag and drop) "
+.RI "retrieves data from a data drop (drag and drop) "
 .ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_close\fP (\fBRGFW_window\fP *win)"
 .br
@@ -81,11 +81,15 @@ Window_management \- Window_management
 .br
 .RI "closes the window without freeing its structure "
 .ti -1c
+.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_fetchSize\fP (\fBRGFW_window\fP *win, \fBi32\fP *w, \fBi32\fP *h)"
+.br
+.RI "fetches the size of the window through the OS (and updates the internal values) "
+.ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_move\fP (\fBRGFW_window\fP *win, \fBi32\fP x, \fBi32\fP y)"
 .br
 .RI "moves the window to a new position on the screen "
 .ti -1c
-.RI "\fBRGFWDEF\fP void \fBRGFW_window_moveToMonitor\fP (\fBRGFW_window\fP *win, \fBRGFW_monitor\fP m)"
+.RI "\fBRGFWDEF\fP void \fBRGFW_window_moveToMonitor\fP (\fBRGFW_window\fP *win, \fBRGFW_monitor\fP *m)"
 .br
 .RI "moves the window to a specific monitor "
 .ti -1c
@@ -121,7 +125,7 @@ Window_management \- Window_management
 .br
 .RI "maximizes the window "
 .ti -1c
-.RI "\fBRGFWDEF\fP void \fBRGFW_window_setFullscreen\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP fullscreen)"
+.RI "\fBRGFWDEF\fP void \fBRGFW_window_setFullscreen\fP (\fBRGFW_window\fP *win, RGFW_fullscreenMode mode)"
 .br
 .RI "toggles fullscreen mode for the window "
 .ti -1c
@@ -147,11 +151,11 @@ Window_management \- Window_management
 .ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_setBorder\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP border)"
 .br
-.RI "toggles window borders "
+.RI "toggles window borders / frame / decor "
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_borderless\fP (\fBRGFW_window\fP *win)"
 .br
-.RI "checks if the window is borderless "
+.RI "checks if the window is borderless (has a border, frame or decor) "
 .ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_setDND\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP allow)"
 .br
@@ -177,13 +181,13 @@ Window_management \- Window_management
 .br
 .RI "sets the icon for the window and/or taskbar "
 .ti -1c
-.RI "\fBRGFWDEF\fP void \fBRGFW_window_setMouse\fP (\fBRGFW_window\fP *win, \fBRGFW_mouse\fP *mouse)"
+.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_setMouse\fP (\fBRGFW_window\fP *win, \fBRGFW_mouse\fP *mouse)"
 .br
-.RI "sets the mouse icon for the window using a loaded bitmap "
+.RI "sets the mouse icon for the window using a loaded mouse icon "
 .ti -1c
-.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_setMouseStandard\fP (\fBRGFW_window\fP *win, RGFW_mouseIcons mouse)"
+.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_setMouseStandard\fP (\fBRGFW_window\fP *win, RGFW_mouseIcon icon)"
 .br
-.RI "Sets the mouse to a standard system cursor\&. "
+.RI "Sets the mouse to a preloaded [by RGFW] standard system cursor\&. "
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_setMouseDefault\fP (\fBRGFW_window\fP *win)"
 .br
@@ -191,23 +195,23 @@ Window_management \- Window_management
 .ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_setRawMouseMode\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP state)"
 .br
-.RI "set (enable or disable) raw mouse mode, locking the cursor and using mouse raw input\&. "
+.RI "set (enable or disable) raw mouse mode only for the select window "
 .ti -1c
-.RI "\fBRGFWDEF\fP void \fBRGFW_window_holdMouse\fP (\fBRGFW_window\fP *win)"
+.RI "\fBRGFWDEF\fP void \fBRGFW_window_captureMouse\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP state)"
 .br
-.RI "Locks the cursor to the center of the window\&. "
+.RI "lock/unlock the cursor\&. "
 .ti -1c
-.RI "\fBRGFWDEF\fP void \fBRGFW_window_unholdMouse\fP (\fBRGFW_window\fP *win)"
+.RI "\fBRGFWDEF\fP void \fBRGFW_window_captureRawMouse\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP state)"
 .br
-.RI "Releases the mouse so it can move freely again\&. "
+.RI "lock/unlock the cursor and enable raw mpuise mode\&. "
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isRawMouseMode\fP (\fBRGFW_window\fP *win)"
 .br
-.RI "Returns true if the mouse is currently held by RGFW\&. "
+.RI "Returns true if the mouse is using raw mouse mode\&. "
 .ti -1c
-.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isHoldingMouse\fP (\fBRGFW_window\fP *win)"
+.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isCaptured\fP (\fBRGFW_window\fP *win)"
 .br
-.RI "Returns true if the mouse is currently held by RGFW\&. "
+.RI "Returns true if the mouse is captured\&. "
 .ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_hide\fP (\fBRGFW_window\fP *win)"
 .br
@@ -216,6 +220,9 @@ Window_management \- Window_management
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_show\fP (\fBRGFW_window\fP *win)"
 .br
 .RI "Shows the window if it was hidden\&. "
+.ti -1c
+.RI "\fBRGFWDEF\fP void \fBRGFW_window_flash\fP (\fBRGFW_window\fP *win, RGFW_flashRequest request)"
+.br
 .ti -1c
 .RI "\fBRGFWDEF\fP void \fBRGFW_window_setShouldClose\fP (\fBRGFW_window\fP *win, \fBRGFW_bool\fP shouldClose)"
 .br
@@ -247,7 +254,15 @@ Window_management \- Window_management
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isFullscreen\fP (\fBRGFW_window\fP *win)"
 .br
-.RI "Checks if the window is currently fullscreen\&. "
+.RI "Checks if the window is currently fullscreen (borderless or exclusive)\&. "
+.ti -1c
+.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isFullscreenExclusive\fP (\fBRGFW_window\fP *win)"
+.br
+.RI "Checks if the window is currently fullscreen (exclusive)\&. "
+.ti -1c
+.RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isFullscreenBorderless\fP (\fBRGFW_window\fP *win)"
+.br
+.RI "Checks if the window is currently fullscreen (borderless)\&. "
 .ti -1c
 .RI "\fBRGFWDEF\fP \fBRGFW_bool\fP \fBRGFW_window_isHidden\fP (\fBRGFW_window\fP *win)"
 .br
@@ -311,7 +326,7 @@ RGFW_TRUE if DND is enabled, RGFW_FALSE otherwise
 .SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_borderless (\fBRGFW_window\fP * win)"
 
 .PP
-checks if the window is borderless ! 
+checks if the window is borderless (has a border, frame or decor) ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -321,6 +336,32 @@ checks if the window is borderless !
 \fBReturns\fP
 .RS 4
 RGFW_TRUE if borderless, RGFW_FALSE otherwise 
+.RE
+.PP
+
+.SS "\fBRGFWDEF\fP void RGFW_window_captureMouse (\fBRGFW_window\fP * win, \fBRGFW_bool\fP state)"
+
+.PP
+lock/unlock the cursor\&. ! 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP The target window\&. 
+.br
+\fIthe\fP boolean state of the mouse's capture state 
+.RE
+.PP
+
+.SS "\fBRGFWDEF\fP void RGFW_window_captureRawMouse (\fBRGFW_window\fP * win, \fBRGFW_bool\fP state)"
+
+.PP
+lock/unlock the cursor and enable raw mpuise mode\&. ! 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP The target window\&. 
+.br
+\fIthe\fP boolean state of raw mouse mode 
 .RE
 .PP
 
@@ -338,7 +379,7 @@ centers the window on the screen !
 .SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_checkEvent (\fBRGFW_window\fP * win, \fBRGFW_event\fP * event)"
 
 .PP
-polls and pops the next event from the window's event queue ! 
+polls and pops the next event with the matching target window in event queue, pushes back events that don't match ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -358,7 +399,7 @@ Example: \fBRGFW_event\fP event; while (RGFW_window_checkEvent(win, &event)) { /
 .SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_checkQueuedEvent (\fBRGFW_window\fP * win, \fBRGFW_event\fP * event)"
 
 .PP
-pops the first queued event for the window ! 
+pops the first queued event with the matching target window, pushes back events that don't match ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -443,6 +484,37 @@ RGFW_TRUE if the mouse left, RGFW_FALSE otherwise
 .RE
 .PP
 
+.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_fetchSize (\fBRGFW_window\fP * win, \fBi32\fP * w, \fBi32\fP * h)"
+
+.PP
+fetches the size of the window through the OS (and updates the internal values) ! 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP a pointer to the window 
+.br
+\fIw\fP [OUTPUT] the width of the window 
+.br
+\fIh\fP [OUTPUT] the height of the window 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+a bool if the function was successful 
+.RE
+.PP
+
+.SS "\fBRGFWDEF\fP void RGFW_window_flash (\fBRGFW_window\fP * win, RGFW_flashRequest request)"
+! @breif request a window flash to get attention from the user 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP the target window 
+.br
+\fIrequest\fP the flash operation requested 
+.RE
+.PP
+
 .SS "\fBRGFWDEF\fP void RGFW_window_focus (\fBRGFW_window\fP * win)"
 
 .PP
@@ -474,23 +546,19 @@ RGFW_TRUE if there is an active drag, RGFW_FALSE otherwise
 .RE
 .PP
 
-.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_getDataDrop (\fBRGFW_window\fP * win, const char *** files, size_t * count)"
+.SS "\fBRGFWDEF\fP \fBRGFW_dataDropNode\fP * RGFW_window_getDataDrop (\fBRGFW_window\fP * win)"
 
 .PP
-retrieves files from a data drop (drag and drop) ! 
+retrieves data from a data drop (drag and drop) ! 
 .PP
 \fBParameters\fP
 .RS 4
 \fIwin\fP a pointer to the target window 
-.br
-\fIfiles\fP [OUTPUT] a pointer to the array of file paths 
-.br
-\fIcount\fP [OUTPUT] the number of dropped files 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-RGFW_TRUE if a data drop occurred, RGFW_FALSE otherwise 
+a valid pointer to the root drag node if a data drop occurred, NULL otherwise 
 .RE
 .PP
 
@@ -525,19 +593,19 @@ Hides the window from view\&. !
 .RE
 .PP
 
-.SS "\fBRGFWDEF\fP void RGFW_window_holdMouse (\fBRGFW_window\fP * win)"
+.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_isCaptured (\fBRGFW_window\fP * win)"
 
 .PP
-Locks the cursor to the center of the window\&. ! 
+Returns true if the mouse is captured\&. ! 
 .PP
 \fBParameters\fP
 .RS 4
 \fIwin\fP The target window\&. 
 .RE
 .PP
-\fBWarning\fP
+\fBReturns\fP
 .RS 4
-this function is deprecated and will be replaced by RGFW_window_setRawMouseMode in RGFW 2\&.0 
+True if the mouse is being captured\&. 
 .RE
 .PP
 
@@ -576,7 +644,39 @@ True if the window is floating\&.
 .SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_isFullscreen (\fBRGFW_window\fP * win)"
 
 .PP
-Checks if the window is currently fullscreen\&. ! 
+Checks if the window is currently fullscreen (borderless or exclusive)\&. ! 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP The target window\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+True if the window is fullscreen\&. 
+.RE
+.PP
+
+.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_isFullscreenBorderless (\fBRGFW_window\fP * win)"
+
+.PP
+Checks if the window is currently fullscreen (borderless)\&. ! 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP The target window\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+True if the window is fullscreen\&. 
+.RE
+.PP
+
+.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_isFullscreenExclusive (\fBRGFW_window\fP * win)"
+
+.PP
+Checks if the window is currently fullscreen (exclusive)\&. ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -602,27 +702,6 @@ Checks if the window is currently hidden\&. !
 \fBReturns\fP
 .RS 4
 True if the window is hidden\&. 
-.RE
-.PP
-
-.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_isHoldingMouse (\fBRGFW_window\fP * win)"
-
-.PP
-Returns true if the mouse is currently held by RGFW\&. ! 
-.PP
-\fBParameters\fP
-.RS 4
-\fIwin\fP The target window\&. 
-.RE
-.PP
-\fBReturns\fP
-.RS 4
-True if the mouse is being held\&. 
-.RE
-.PP
-\fBWarning\fP
-.RS 4
-this function is deprecated and will be replaced by RGFW_window_isHoldingMouse in RGFW 2\&.0 
 .RE
 .PP
 
@@ -817,7 +896,7 @@ RGFW_TRUE if the mouse button was released, RGFW_FALSE otherwise
 .SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_isRawMouseMode (\fBRGFW_window\fP * win)"
 
 .PP
-Returns true if the mouse is currently held by RGFW\&. ! 
+Returns true if the mouse is using raw mouse mode\&. ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -826,7 +905,7 @@ Returns true if the mouse is currently held by RGFW\&. !
 .PP
 \fBReturns\fP
 .RS 4
-True if the mouse is being held\&. 
+True if the mouse is using raw mouse input mode\&. 
 .RE
 .PP
 
@@ -882,7 +961,7 @@ Moves the mouse to the specified position within the window\&. !
 .RE
 .PP
 
-.SS "\fBRGFWDEF\fP void RGFW_window_moveToMonitor (\fBRGFW_window\fP * win, \fBRGFW_monitor\fP m)"
+.SS "\fBRGFWDEF\fP void RGFW_window_moveToMonitor (\fBRGFW_window\fP * win, \fBRGFW_monitor\fP * m)"
 
 .PP
 moves the window to a specific monitor ! 
@@ -950,7 +1029,7 @@ sets the aspect ratio of the window !
 .SS "\fBRGFWDEF\fP void RGFW_window_setBorder (\fBRGFW_window\fP * win, \fBRGFW_bool\fP border)"
 
 .PP
-toggles window borders ! 
+toggles window borders / frame / decor ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -993,7 +1072,7 @@ makes the window a floating window !
 .RE
 .PP
 
-.SS "\fBRGFWDEF\fP void RGFW_window_setFullscreen (\fBRGFW_window\fP * win, \fBRGFW_bool\fP fullscreen)"
+.SS "\fBRGFWDEF\fP void RGFW_window_setFullscreen (\fBRGFW_window\fP * win, RGFW_fullscreenMode mode)"
 
 .PP
 toggles fullscreen mode for the window ! 
@@ -1002,7 +1081,7 @@ toggles fullscreen mode for the window !
 .RS 4
 \fIwin\fP a pointer to the target window 
 .br
-\fIfullscreen\fP RGFW_TRUE to enable fullscreen, RGFW_FALSE to disable 
+\fIfullscreen\fP the fullscreen mode to use RGFW_fullscreenNone, RGFW_fullscreenBorderless, RGFW_fullscreenExclusive 
 .RE
 .PP
 
@@ -1086,10 +1165,10 @@ sets the minimum size of the window !
 .RE
 .PP
 
-.SS "\fBRGFWDEF\fP void RGFW_window_setMouse (\fBRGFW_window\fP * win, \fBRGFW_mouse\fP * mouse)"
+.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_setMouse (\fBRGFW_window\fP * win, \fBRGFW_mouse\fP * mouse)"
 
 .PP
-sets the mouse icon for the window using a loaded bitmap ! 
+sets the mouse icon for the window using a loaded mouse icon ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -1128,16 +1207,16 @@ toggles mouse passthrough for the window !
 .RE
 .PP
 
-.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_setMouseStandard (\fBRGFW_window\fP * win, RGFW_mouseIcons mouse)"
+.SS "\fBRGFWDEF\fP \fBRGFW_bool\fP RGFW_window_setMouseStandard (\fBRGFW_window\fP * win, RGFW_mouseIcon icon)"
 
 .PP
-Sets the mouse to a standard system cursor\&. ! 
+Sets the mouse to a preloaded [by RGFW] standard system cursor\&. ! 
 .PP
 \fBParameters\fP
 .RS 4
 \fIwin\fP The target window\&. 
 .br
-\fImouse\fP The standard cursor type (see RGFW_MOUSE enum)\&. 
+\fImouse\fP The standardmouse icon (see RGFW_mouseIcon enum)\&. 
 .RE
 .PP
 \fBReturns\fP
@@ -1175,7 +1254,7 @@ sets the opacity level of the window !
 .SS "\fBRGFWDEF\fP void RGFW_window_setRawMouseMode (\fBRGFW_window\fP * win, \fBRGFW_bool\fP state)"
 
 .PP
-set (enable or disable) raw mouse mode, locking the cursor and using mouse raw input\&. ! 
+set (enable or disable) raw mouse mode only for the select window ! 
 .PP
 \fBParameters\fP
 .RS 4
@@ -1235,22 +1314,6 @@ Shows or hides the mouse cursor for the window\&. !
 \fIwin\fP The target window\&. 
 .br
 \fIshow\fP True to show the mouse, false to hide it\&. 
-.RE
-.PP
-
-.SS "\fBRGFWDEF\fP void RGFW_window_unholdMouse (\fBRGFW_window\fP * win)"
-
-.PP
-Releases the mouse so it can move freely again\&. ! 
-.PP
-\fBParameters\fP
-.RS 4
-\fIwin\fP The target window\&. 
-.RE
-.PP
-\fBWarning\fP
-.RS 4
-this function is deprecated and will be replaced by RGFW_window_setRawMouseMode in RGFW 2\&.0 
 .RE
 .PP
 

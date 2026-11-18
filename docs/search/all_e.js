@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['u16_0',['u16',['../RGFW_8h.html#ace9d960e74685e2cd84b36132dbbf8aa',1,'RGFW.h']]],
-  ['u32_1',['u32',['../RGFW_8h.html#afaa62991928fb9fb18ff0db62a040aba',1,'RGFW.h']]],
-  ['u64_2',['u64',['../RGFW_8h.html#a3f7e2bcbb0b4c338f3c4f6c937cd4234',1,'RGFW.h']]],
-  ['u8_3',['u8',['../RGFW_8h.html#a92c50087ca0e64fa93fc59402c55f8ca',1,'RGFW.h']]]
+  ['scale_0',['scale',['../unionRGFW__event.html#a860aa9af0706cd7217ad6622e47747f4',1,'RGFW_event']]],
+  ['scalex_1',['scaleX',['../structRGFW__monitor.html#ac991866248d4babbd78fe1a7fd8ee145',1,'RGFW_monitor']]],
+  ['scaley_2',['scaleY',['../structRGFW__monitor.html#a906b121ba6fb271b108da0d063bb303e',1,'RGFW_monitor']]],
+  ['src_3',['src',['../structRGFW__monitorMode.html#ac9492deabed35fd038e8b44f2e09764e',1,'RGFW_monitorMode']]],
+  ['state_4',['state',['../structRGFW__windowFocusEvent.html#abbed70bcff33345a64328852729cad47',1,'RGFW_windowFocusEvent::state()'],['../structRGFW__mouseButtonEvent.html#a911763210b899a5d36551474cb0dfde9',1,'RGFW_mouseButtonEvent::state()'],['../structRGFW__keyEvent.html#a35b26572d794f51bbe769530f17ce3ff',1,'RGFW_keyEvent::state()'],['../structRGFW__monitorEvent.html#af0af711f33474012ff1818b90bce015a',1,'RGFW_monitorEvent::state()']]],
+  ['supporting_5',['Supporting',['../group__Supporting.html',1,'']]]
 ];
